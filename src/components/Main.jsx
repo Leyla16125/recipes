@@ -14,7 +14,7 @@ function MainPage() {
         const sortedRecipes = data.sort(
           (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
         );
-        setRecipes(sortedRecipes.slice(0, 2));
+        setRecipes(sortedRecipes.slice(0, 2)); // Show only the first two recipes
         setLoading(false);
       })
       .catch((error) => {
@@ -23,8 +23,19 @@ function MainPage() {
       });
   }, []);
 
+  
+
   const openRecipe = (id) => {
-    navigate(`/recipes/${id}`, { state: { fromMainPage: true } });
+    navigate(`/receipt/${id}`);
+  };
+  
+
+  // Function to truncate the description to 100 characters
+  const truncateDescription = (description) => {
+    if (description.length > 100) {
+      return description.slice(0, 97) + "..."; // Keep first 97 characters and add '...'
+    }
+    return description;
   };
 
   if (loading) {
@@ -34,9 +45,13 @@ function MainPage() {
   return (
     <div className="main-container">
       <div className="header">
-        <button className="left-button" onClick={() => navigate("/recipes")}>Explore Recipes</button>
+        <button className="left-button" onClick={() => navigate("/receipt")}>
+          Explore Recipes
+        </button>
         <h1 className="welcome-message">Welcome to Wonderland of Recipes</h1>
-        <button className="right-button" onClick={() => navigate("/contact")}>Contact Us</button>
+        <button className="right-button" onClick={() => navigate("/contact")}>
+          Contact Us
+        </button>
       </div>
 
       <div className="book-section">
@@ -44,16 +59,18 @@ function MainPage() {
           <div className="page left">
             {recipes[0] && (
               <div className="card" onClick={() => openRecipe(recipes[0].id)}>
-                <img src={recipes[0].image} alt={recipes[0].title} />
                 <h3>{recipes[0].title}</h3>
+                <p>{truncateDescription(recipes[0].description)}</p>
+                <p>Difficulty: {recipes[0].difficulty}</p>
               </div>
             )}
           </div>
           <div className="page right">
             {recipes[1] && (
               <div className="card" onClick={() => openRecipe(recipes[1].id)}>
-                <img src={recipes[1].image} alt={recipes[1].title} />
                 <h3>{recipes[1].title}</h3>
+                <p>{truncateDescription(recipes[1].description)}</p>
+                <p>Difficulty: {recipes[1].difficulty}</p>
               </div>
             )}
           </div>
@@ -62,7 +79,10 @@ function MainPage() {
 
       <div className="portfolio-section">
         <h2>Our Projects & Portfolios</h2>
-        <p>Project's Github Link: <a href="https://github.com/Leyla16125/recipes">Recipts Project</a></p>
+        <p>
+          Project's Github Link:{" "}
+          <a href="https://github.com/Leyla16125/recipes">Recipes Project</a>
+        </p>
       </div>
     </div>
   );

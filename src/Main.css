@@ -1,7 +1,8 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #a8abae; /* Light background color */
+    background-color: #a8abae;
+    /* Light background color */
 }
 
 .main-container {
@@ -17,7 +18,8 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.left-button, .right-button {
+.left-button,
+.right-button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -26,7 +28,8 @@ body {
     cursor: pointer;
 }
 
-.left-button:hover, .right-button:hover {
+.left-button:hover,
+.right-button:hover {
     background-color: #0056b3;
 }
 
@@ -63,42 +66,58 @@ body {
     border-right: 1px solid #ccc;
 }
 
-.card {
-    text-align: center;
-    cursor: pointer;
+.book-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;  /* Vertically center the cards */
+    gap: 20px;  /* Add space between the cards */
+    margin: 40px 0;
 }
 
-.card img {
+.book {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
+    max-width: 900px;  /* Set max width for the book container */
+    gap: 20px;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    width: 100%;  /* Ensure cards take up full width of their container */
+    text-align: center;
+    cursor: pointer;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: transform 0.3s;
+    height: 300px; /* Set a fixed height for consistency */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card h3 {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #333;
+    font-size: 1.5rem;
+    margin: 10px 0;
 }
 
-.portfolio-section {
-    margin-top: 30px;
-    text-align: left;
-}
-
-.portfolio-section h2 {
+.card p {
+    font-size: 1rem;
+    color: #555;
     margin-bottom: 10px;
-    font-size: 20px;
-    color: #333;
-}
-
-.portfolio-section textarea {
-    width: 80%;
-    max-width: 600px;
-    height: 150px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    resize: none;
 }

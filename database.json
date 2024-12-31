@@ -1,5 +1,46 @@
 {
-    "recipes": [
-        
-    ]
+  "recipes": [
+    {
+      "id": "5875",
+      "title": "Classic Homemade Burger",
+      "description": "A juicy and flavorful burger made from scratch, perfect for a weekend treat or family dinner. Customize with your favorite toppings for a personalized touch.",
+      "ingredients": [
+        "Burger Patty:\n500g ground beef (80% lean",
+        "20% fat)\n1 small onion",
+        "finely chopped\n1 clove garlic",
+        "minced\n1 tsp salt\n1/2 tsp black pepper\n1 tsp Worcestershire sauce\n1 tsp paprika\n1 egg (optional",
+        "for binding)\nBurger Assembly:\n4 burger buns\n4 slices of cheese (optional)\nLettuce leaves\n1 tomato",
+        "sliced\n1 onion",
+        "sliced into rings\nPickles (optional)\nKetchup",
+        "mayonnaise",
+        "and mustard (to taste)"
+      ],
+      "steps": "Prepare the Patty Mixture:\n\nIn a large bowl, mix ground beef, onion, garlic, salt, pepper, Worcestershire sauce, paprika, and egg. Combine well without over-mixing.\nShape the Patties:\n\nDivide the mixture into 4 equal portions and shape into patties about 1/2 inch thick. Make a small indent in the center to prevent puffing during cooking.\nCook the Patties:\n\nHeat a grill or frying pan over medium-high heat. Cook patties for about 3-4 minutes on each side, or until desired doneness. Add cheese slices during the last minute of cooking if desired.\nToast the Buns:\n\nLightly toast the burger buns on the grill or in a skillet for extra flavor.\nAssemble the Burgers:\n\nSpread condiments (ketchup, mayonnaise, mustard) on the buns. Add lettuce, tomato slices, onion rings, and pickles. Place the cooked patty on top, cover with the bun, and serve.",
+      "tags": [
+        "Comfort",
+        "Food",
+        "American Cuisine",
+        "Quick Meals",
+        "Grilled"
+      ],
+      "difficulty": "Easy",
+      "dateAdded": "2024-12-31T19:48:29.997Z",
+      "dateModified": "2024-12-31T19:48:29.997Z"
+    },
+    {
+      "id": "246f",
+      "title": "Hello World",
+      "description": "2025",
+      "ingredients": [
+        "Vsdfsd"
+      ],
+      "steps": "fsdfds",
+      "tags": [
+        "Halo"
+      ],
+      "difficulty": "Easy",
+      "dateAdded": "2024-12-31T20:19:54.414Z",
+      "dateModified": "2024-12-31T20:19:54.414Z"
+    }
+  ]
 }
