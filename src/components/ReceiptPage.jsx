@@ -43,20 +43,30 @@ const ReceiptPage = () => {
     if (sortOption === "title") {
       sorted.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === "dateModified") {
-      sorted.sort((a, b) => new Date(b.dateModified) - new Date(a.dateModified));
+      sorted.sort((a, b) => {
+        const dateA = new Date(a.dateModified).getTime() || 0;
+        const dateB = new Date(b.dateModified).getTime() || 0;
+        return dateB - dateA; // Descending
+      });
     } else if (sortOption === "dateAdded") {
-      sorted.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+      sorted.sort((a, b) => {
+        const dateA = new Date(a.dateAdded).getTime() || 0;
+        const dateB = new Date(b.dateAdded).getTime() || 0;
+        return dateB - dateA; // Descending
+      });
     } else if (sortOption === "difficulty") {
       const difficultyOrder = { Easy: 1, Medium: 2, Hard: 3 };
-      sorted.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
+      sorted.sort(
+        (a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]
+      );
     }
     setSortedRecipes(sorted);
   }, [recipes, sortOption]);
+  
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -137,13 +147,18 @@ const ReceiptPage = () => {
 
   const handlePopupSubmit = (e) => {
     e.preventDefault();
-
+  
+    const updatedRecipe = {
+      ...editingRecipe,
+      dateModified: new Date().toISOString(), // Update modified date
+    };
+  
     fetch(`http://localhost:3000/recipes/${editingRecipe.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(editingRecipe),
+      body: JSON.stringify(updatedRecipe),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -156,6 +171,7 @@ const ReceiptPage = () => {
       })
       .catch((err) => console.error("Error updating recipe:", err));
   };
+  
 
   return (
     <div className="receipt-container">
@@ -195,7 +211,6 @@ const ReceiptPage = () => {
           <option value="difficulty">Difficulty</option>
         </select>
       </div>
-      
 
       <form className="recipe-form" onSubmit={handleSubmit}>
         <input
@@ -247,8 +262,7 @@ const ReceiptPage = () => {
       </form>
 
       <div className="cards-container">
-
-      {sortedRecipes.map((recipe) => (
+        {sortedRecipes.map((recipe) => (
           <div
             className="card"
             key={recipe.id}
@@ -260,30 +274,33 @@ const ReceiptPage = () => {
               <strong>Difficulty:</strong> {recipe.difficulty}
             </p>
             <p>
-              <strong>Last Updated:</strong> {new Date(recipe.dateModified).toLocaleString()}
+              <strong>Date Added:</strong>{" "}
+              {new Date(recipe.dateAdded).toLocaleString()}
+            </p>
+            <p>
+              <strong>Last Updated:</strong>{" "}
+              {new Date(recipe.dateModified).toLocaleString()}
             </p>
             <div className="card-buttons">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEdit(recipe);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(recipe.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEdit(recipe);
+                }}
+              >
+                Edit
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(recipe.id);
+                }}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
-
-
       </div>
 
       {showPopup && editingRecipe && (
