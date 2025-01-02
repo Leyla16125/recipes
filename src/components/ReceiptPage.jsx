@@ -16,6 +16,8 @@ const ReceiptPage = () => {
   const [hoveredCard, setHoveredCard] = useState(null); // To handle hovered card
   const [editingRecipe, setEditingRecipe] = useState(null); // For handling recipe edit state
   const [showPopup, setShowPopup] = useState(false);
+  const [sortedRecipes, setSortedRecipes] = useState([]);
+  const [sortOption, setSortOption] = useState("dateModified"); // Default sorting option
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -35,6 +37,26 @@ const ReceiptPage = () => {
       }
     }
   }, [id, recipes]);
+
+  useEffect(() => {
+    let sorted = [...recipes];
+    if (sortOption === "title") {
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOption === "dateModified") {
+      sorted.sort((a, b) => new Date(b.dateModified) - new Date(a.dateModified));
+    } else if (sortOption === "dateAdded") {
+      sorted.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+    } else if (sortOption === "difficulty") {
+      const difficultyOrder = { Easy: 1, Medium: 2, Hard: 3 };
+      sorted.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
+    }
+    setSortedRecipes(sorted);
+  }, [recipes, sortOption]);
+
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -154,6 +176,27 @@ const ReceiptPage = () => {
         Back to Home
       </button>
 
+      <div className="sort-container">
+        <label htmlFor="sort">Sort by:</label>
+        <select
+          id="sort"
+          value={sortOption}
+          onChange={handleSortChange}
+          style={{
+            marginLeft: "10px",
+            padding: "5px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
+        >
+          <option value="title">Title</option>
+          <option value="dateAdded">Date Added</option>
+          <option value="dateModified">Last Updated</option>
+          <option value="difficulty">Difficulty</option>
+        </select>
+      </div>
+      
+
       <form className="recipe-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -204,27 +247,22 @@ const ReceiptPage = () => {
       </form>
 
       <div className="cards-container">
-        {recipes.map((recipe) => (
+
+      {sortedRecipes.map((recipe) => (
           <div
             className="card"
             key={recipe.id}
-            onClick={() => handleCardClick(recipe)}
-            onMouseEnter={() => setHoveredCard(recipe.id)}
-            onMouseLeave={() => setHoveredCard(null)}
+            onClick={() => navigate(`/receipt/${recipe.id}`)}
           >
             <h3>{recipe.title}</h3>
-            <p>{truncate(recipe.description, 150)}</p>
+            <p>{recipe.description}</p>
             <p>
               <strong>Difficulty:</strong> {recipe.difficulty}
             </p>
             <p>
-              <strong>Added:</strong> {formatDateTime(recipe.dateAdded)}
+              <strong>Last Updated:</strong> {new Date(recipe.dateModified).toLocaleString()}
             </p>
-            <p>
-              <strong>Modified:</strong> {formatDateTime(recipe.dateModified)}
-            </p>
-            {hoveredCard === recipe.id && (
-              <div className="card-buttons">
+            <div className="card-buttons">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -242,9 +280,10 @@ const ReceiptPage = () => {
                   Delete
                 </button>
               </div>
-            )}
           </div>
         ))}
+
+
       </div>
 
       {showPopup && editingRecipe && (

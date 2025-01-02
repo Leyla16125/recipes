@@ -46,7 +46,7 @@ function MainPage() {
     <div className="main-container">
       <div className="header">
         <button className="left-button" onClick={() => navigate("/receipt")}>
-          Explore Recipes
+          Recipes
         </button>
         <h1 className="welcome-message">Welcome to Wonderland of Recipes</h1>
         <button className="right-button" onClick={() => navigate("/contact")}>
