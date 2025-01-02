@@ -1,27 +1,12 @@
 .receipt-container {
     padding: 20px;
-    background-color: #f8f8f8;
+    background-color: #a8abae;
 }
 
 .cards-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
-
-.card {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    width: 250px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    position: relative;
-}
-
-.card:hover .card-actions {
-    display: flex;
 }
 
 .card-actions {
@@ -141,7 +126,6 @@
     color: red;
 }
 
-
 .card {
     position: relative;
     padding: 10px;
@@ -156,6 +140,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.card-actions,
 .card-buttons {
     display: none;
     position: absolute;
@@ -163,9 +148,12 @@
     right: 10px;
 }
 
+.card:hover .card-actions,
 .card:hover .card-buttons {
     display: block;
 }
+
+
 
 .card-buttons button {
     margin-left: 5px;
