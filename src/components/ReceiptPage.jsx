@@ -13,11 +13,13 @@ const ReceiptPage = () => {
     difficulty: "Easy",
   });
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [hoveredCard, setHoveredCard] = useState(null); // To handle hovered card
   const [editingRecipe, setEditingRecipe] = useState(null); // For handling recipe edit state
   const [showPopup, setShowPopup] = useState(false);
   const [sortedRecipes, setSortedRecipes] = useState([]);
   const [sortOption, setSortOption] = useState("dateModified"); // Default sorting option
+  const [tags, setTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,9 +27,19 @@ const ReceiptPage = () => {
   useEffect(() => {
     fetch("http://localhost:3000/recipes")
       .then((res) => res.json())
-      .then((data) => setRecipes(data))
+      .then((data) => {
+        setRecipes(data);
+
+        // Extract unique tags from recipes
+        const allTags = data
+          .flatMap((recipe) => recipe.tags)
+          .filter((tag, index, self) => self.indexOf(tag) === index); // Get unique tags
+
+        setTags(allTags);
+      })
       .catch((err) => console.error("Error fetching recipes:", err));
   }, []);
+
 
   useEffect(() => {
     if (id) {
@@ -38,30 +50,38 @@ const ReceiptPage = () => {
     }
   }, [id, recipes]);
 
+  // Sorting and filtering logic
   useEffect(() => {
-    let sorted = [...recipes];
+    let filtered = [...recipes];
+
+    if (selectedTag) {
+      filtered = filtered.filter((recipe) =>
+        recipe.tags.includes(selectedTag)
+      );
+    }
+
+    if (selectedDifficulty) {
+      filtered = filtered.filter(
+        (recipe) => recipe.difficulty === selectedDifficulty
+      );
+    }
+
     if (sortOption === "title") {
-      sorted.sort((a, b) => a.title.localeCompare(b.title));
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === "dateModified") {
-      sorted.sort((a, b) => {
-        const dateA = new Date(a.dateModified).getTime() || 0;
-        const dateB = new Date(b.dateModified).getTime() || 0;
-        return dateB - dateA; // Descending
-      });
+      filtered.sort((a, b) => new Date(b.dateModified) - new Date(a.dateModified));
     } else if (sortOption === "dateAdded") {
-      sorted.sort((a, b) => {
-        const dateA = new Date(a.dateAdded).getTime() || 0;
-        const dateB = new Date(b.dateAdded).getTime() || 0;
-        return dateB - dateA; // Descending
-      });
+      filtered.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
     } else if (sortOption === "difficulty") {
       const difficultyOrder = { Easy: 1, Medium: 2, Hard: 3 };
-      sorted.sort(
+      filtered.sort(
         (a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]
       );
     }
-    setSortedRecipes(sorted);
-  }, [recipes, sortOption]);
+
+    setSortedRecipes(filtered);
+  }, [recipes, sortOption, selectedTag, selectedDifficulty]);
+
   
 
   const handleSortChange = (e) => {
@@ -102,31 +122,11 @@ const ReceiptPage = () => {
       .catch((err) => console.error("Error adding recipe:", err));
   };
 
-  const handleCardClick = (recipe) => {
-    navigate(`/receipt/${recipe.id}`);
-  };
 
   const closeModal = () => {
     setSelectedRecipe(null);
     navigate("/receipt");
   };
-
-  const truncate = (text, maxLength) =>
-    text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
-
-  function formatDateTime(dateString) {
-    const date = new Date(dateString);
-    const options = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    };
-
-    return date.toLocaleString("en-US", options).replace(",", "");
-  }
 
   const handleEdit = (recipe) => {
     setEditingRecipe(recipe);
@@ -209,6 +209,39 @@ const ReceiptPage = () => {
           <option value="dateAdded">Date Added</option>
           <option value="dateModified">Last Updated</option>
           <option value="difficulty">Difficulty</option>
+        </select>
+      </div>
+
+      {/* Filter Dropdowns */}
+      <div className="filter-container">
+        <label htmlFor="tags">Filter by Tag:</label>
+        <select
+          id="tags"
+          value={selectedTag}
+          onChange={(e) => setSelectedTag(e.target.value)}
+          style={{ marginLeft: "10px" }}
+        >
+          <option value="">All Tags</option>
+          {tags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor="difficulty" style={{ marginLeft: "20px" }}>
+          Filter by Difficulty:
+        </label>
+        <select
+          id="difficulty"
+          value={selectedDifficulty}
+          onChange={(e) => setSelectedDifficulty(e.target.value)}
+          style={{ marginLeft: "10px" }}
+        >
+          <option value="">All Levels</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
         </select>
       </div>
 
