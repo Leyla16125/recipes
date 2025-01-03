@@ -20,6 +20,7 @@ const ReceiptPage = () => {
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -66,6 +67,18 @@ const ReceiptPage = () => {
       );
     }
 
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (recipe) =>
+          recipe.title.toLowerCase().includes(query) ||
+          recipe.description.toLowerCase().includes(query) ||
+          recipe.ingredients.some((ingredient) =>
+            ingredient.toLowerCase().includes(query)
+          )
+      );
+    }
+
     if (sortOption === "title") {
       filtered.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === "dateModified") {
@@ -80,7 +93,7 @@ const ReceiptPage = () => {
     }
 
     setSortedRecipes(filtered);
-  }, [recipes, sortOption, selectedTag, selectedDifficulty]);
+  }, [recipes, sortOption, selectedTag, selectedDifficulty, searchQuery]);
 
   
 
@@ -191,6 +204,23 @@ const ReceiptPage = () => {
       >
         Back to Home
       </button>
+
+      {/* Search Bar */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by title, description, or ingredients"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{
+            padding: "10px",
+            marginBottom: "20px",
+            width: "100%",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
+        />
+      </div>
 
       <div className="sort-container">
         <label htmlFor="sort">Sort by:</label>
