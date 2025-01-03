@@ -1,43 +1,57 @@
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #a8abae;
-    /* Light background color */
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #343a40;
 }
 
 .main-container {
     padding: 20px;
+    max-width: 1200px;
+    margin: auto;
 }
+
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-.left-button,
-.right-button {
-    background-color: #007bff;
+.header .left-button,
+.header .right-button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     padding: 10px 20px;
-    cursor: pointer;
-}
-
-.left-button:hover,
-.right-button:hover {
-    background-color: #0056b3;
-}
-
-.welcome-message {
-    font-size: 24px;
+    font-size: 14px;
     font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.header .left-button:hover,
+.header .right-button:hover {
+    background: linear-gradient(135deg, #0056b3, #003580);
+}
+.welcome-message {
+    font-size: 28px;
+    font-weight: bold;
+    color: #495057;
     text-align: center;
-    color: #333;
+    margin-bottom: 30px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
 }
 
 .book-section {
@@ -74,14 +88,6 @@ body {
     margin: 40px 0;
 }
 
-.book {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 900px;  /* Set max width for the book container */
-    gap: 20px;
-}
-
 .page {
     display: flex;
     justify-content: center;
@@ -112,12 +118,13 @@ body {
 }
 
 .card h3 {
-    font-size: 1.5rem;
-    margin: 10px 0;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #007bff;
 }
 
 .card p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 10px;
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 15px;
 }

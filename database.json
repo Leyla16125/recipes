@@ -28,16 +28,19 @@
       "dateModified": "2024-12-31T19:48:29.997Z"
     },
     {
-      "id": "11d3",
+      "id": "3570",
       "title": "Spaghetti Carbonara",
       "description": "A creamy, comforting Italian pasta dish made with eggs, cheese, pancetta, and pepper. Perfect for a quick yet indulgent meal.",
-      "ingredients": [
-        "400g spaghetti\n150g pancetta or guanciale",
-        "diced\n2 large eggs\n2 large egg yolks\n1 cup (100g) grated Pecorino Romano or Parmesan cheese\n2 cloves garlic",
-        "minced\n1 tsp freshly ground black pepper\nSalt",
-        "to taste"
+      "ingredientsList": [
+        "400g spaghetti",
+        "150g pancetta or guanciale (diced)",
+        "2 large eggs",
+        "2 large egg yolks",
+        "1 cup (100g) grated Pecorino Romano or Parmesan cheese",
+        "2 cloves garlic (minced)",
+        "1 tsp freshly ground black pepper Salt to taste"
       ],
-      "steps": "Bring a large pot of salted water to a boil and cook the spaghetti according to package instructions until al dente. Reserve 1 cup of pasta water before draining.\nIn a bowl, whisk together the eggs, egg yolks, and grated cheese until smooth. Set aside.\nHeat a large skillet over medium heat and cook the pancetta until crispy, about 5–7 minutes. Add minced garlic and sauté for an additional minute.\nReduce the skillet's heat to low. Add the drained spaghetti to the skillet with the pancetta, tossing to coat.\nRemove the skillet from heat. Quickly pour the egg and cheese mixture over the pasta, stirring vigorously to create a creamy sauce. Add a splash of reserved pasta water if the sauce is too thick.\nSeason with freshly ground black pepper and adjust salt to taste.\nServe immediately, garnished with extra cheese and black pepper if desired.",
+      "steps": "Bring a large pot of salted water to a boil and cook the spaghetti according to package instructions until al dente. Reserve 1 cup of pasta water before draining. In a bowl, whisk together the eggs, egg yolks, and grated cheese until smooth. Set aside. Heat a large skillet over medium heat and cook the pancetta until crispy, about 5–7 minutes. Add minced garlic and sauté for an additional minute. Reduce the skillet's heat to low. Add the drained spaghetti to the skillet with the pancetta, tossing to coat. Remove the skillet from heat. Quickly pour the egg and cheese mixture over the pasta, stirring vigorously to create a creamy sauce. Add a splash of reserved pasta water if the sauce is too thick. Season with freshly ground black pepper and adjust salt to taste. Serve immediately, garnished with extra cheese and black pepper if desired.",
       "tags": [
         "Italian",
         "Pasta",
@@ -45,9 +48,18 @@
         "Comfort Food",
         "One-Pot Dish"
       ],
-      "difficulty": "Medium",
-      "dateAdded": "2025-01-02T20:23:42.624Z",
-      "dateModified": "2025-01-02T22:35:38.876Z"
+      "difficulty": "Easy",
+      "ingredients": [
+        "400g spaghetti",
+        "150g pancetta or guanciale (diced)",
+        "2 large eggs",
+        "2 large egg yolks",
+        "1 cup (100g) grated Pecorino Romano or Parmesan cheese",
+        "2 cloves garlic (minced)",
+        "1 tsp freshly ground black pepper Salt to taste"
+      ],
+      "dateAdded": "2025-01-03T13:40:18.945Z",
+      "dateModified": "2025-01-03T13:40:18.945Z"
     }
   ],
   "messages": [
@@ -56,6 +68,12 @@
       "subject": "sdfsdf",
       "email": "sdfsdf@sdfds.com",
       "message": "sdfdsf"
+    },  
+    {
+      "id": "1f89",
+      "subject": "sdfggb",
+      "email": "ffds@dfgfdg.com",
+      "message": "dfg"
     }
   ]
 }

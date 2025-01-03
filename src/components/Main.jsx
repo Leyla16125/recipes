@@ -23,12 +23,9 @@ function MainPage() {
       });
   }, []);
 
-  
-
   const openRecipe = (id) => {
     navigate(`/receipt/${id}`);
   };
-  
 
   // Function to truncate the description to 100 characters
   const truncateDescription = (description) => {
@@ -78,10 +75,23 @@ function MainPage() {
       </div>
 
       <div className="portfolio-section">
+        <hr />
         <h2>Our Projects & Portfolios</h2>
         <p>
-          Project's Github Link:{" "}
+          Recipt Project's Github Link:{" "}
           <a href="https://github.com/Leyla16125/recipes">Recipes Project</a>
+        </p>
+        <p>
+          Chrome Extension Github Link:{" "}
+          <a href="https://github.com/Leyla16125/chrome-extension-project">
+            Data Scraper Extension
+          </a>
+        </p>
+        <p>
+          Azerbaijan Flag Github Link:{" "}
+          <a href="https://github.com/Leyla16125/Mini-project-Flag-of-Azerbaijan-using-CSS">
+            Flag
+          </a>
         </p>
       </div>
     </div>
