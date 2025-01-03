@@ -7,7 +7,7 @@ const ReceiptPage = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    ingredients: "",
+    ingredientsList: [],
     steps: "",
     tags: "",
     difficulty: "Easy",
@@ -21,6 +21,7 @@ const ReceiptPage = () => {
   const [selectedTag, setSelectedTag] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [searchQuery, setSearchQuery] = useState(""); // New state for search query
+  const [newIngredient, setNewIngredient] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -41,7 +42,6 @@ const ReceiptPage = () => {
       .catch((err) => console.error("Error fetching recipes:", err));
   }, []);
 
-
   useEffect(() => {
     if (id) {
       const recipe = recipes.find((recipe) => recipe.id === id);
@@ -56,9 +56,7 @@ const ReceiptPage = () => {
     let filtered = [...recipes];
 
     if (selectedTag) {
-      filtered = filtered.filter((recipe) =>
-        recipe.tags.includes(selectedTag)
-      );
+      filtered = filtered.filter((recipe) => recipe.tags.includes(selectedTag));
     }
 
     if (selectedDifficulty) {
@@ -82,7 +80,9 @@ const ReceiptPage = () => {
     if (sortOption === "title") {
       filtered.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === "dateModified") {
-      filtered.sort((a, b) => new Date(b.dateModified) - new Date(a.dateModified));
+      filtered.sort(
+        (a, b) => new Date(b.dateModified) - new Date(a.dateModified)
+      );
     } else if (sortOption === "dateAdded") {
       filtered.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
     } else if (sortOption === "difficulty") {
@@ -95,8 +95,6 @@ const ReceiptPage = () => {
     setSortedRecipes(filtered);
   }, [recipes, sortOption, selectedTag, selectedDifficulty, searchQuery]);
 
-  
-
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
@@ -106,7 +104,7 @@ const ReceiptPage = () => {
 
     const newRecipe = {
       ...formData,
-      ingredients: formData.ingredients.split(",").map((item) => item.trim()),
+      ingredients: formData.ingredientsList,
       steps: formData.steps,
       tags: formData.tags.split(",").map((item) => item.trim()),
       dateAdded: new Date().toISOString(),
@@ -126,7 +124,7 @@ const ReceiptPage = () => {
         setFormData({
           title: "",
           description: "",
-          ingredients: "",
+          ingredientsList: [],
           steps: "",
           tags: "",
           difficulty: "Easy",
@@ -135,6 +133,29 @@ const ReceiptPage = () => {
       .catch((err) => console.error("Error adding recipe:", err));
   };
 
+  const deleteIngredient = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      ingredientsList: prev.ingredientsList.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleIngredientChange = (index, value) => {
+    setFormData((prev) => {
+      const updatedIngredients = [...prev.ingredientsList];
+      updatedIngredients[index] = value;
+      return { ...prev, ingredientsList: updatedIngredients };
+    });
+  };
+
+  const addIngredient = (ingredient) => {
+    if (ingredient.trim()) {
+      setFormData((prev) => ({
+        ...prev,
+        ingredientsList: [...prev.ingredientsList, ingredient.trim()],
+      }));
+    }
+  };
 
   const closeModal = () => {
     setSelectedRecipe(null);
@@ -160,12 +181,12 @@ const ReceiptPage = () => {
 
   const handlePopupSubmit = (e) => {
     e.preventDefault();
-  
+
     const updatedRecipe = {
       ...editingRecipe,
       dateModified: new Date().toISOString(), // Update modified date
     };
-  
+
     fetch(`http://localhost:3000/recipes/${editingRecipe.id}`, {
       method: "PATCH",
       headers: {
@@ -184,6 +205,7 @@ const ReceiptPage = () => {
       })
       .catch((err) => console.error("Error updating recipe:", err));
   };
+
   
 
   return (
@@ -241,6 +263,7 @@ const ReceiptPage = () => {
           <option value="difficulty">Difficulty</option>
         </select>
       </div>
+      <br />
 
       {/* Filter Dropdowns */}
       <div className="filter-container">
@@ -274,6 +297,7 @@ const ReceiptPage = () => {
           <option value="Hard">Hard</option>
         </select>
       </div>
+      <hr />
 
       <form className="recipe-form" onSubmit={handleSubmit}>
         <input
@@ -291,14 +315,45 @@ const ReceiptPage = () => {
           }
           required
         />
-        <textarea
-          placeholder="Ingredients (comma-separated)"
-          value={formData.ingredients}
-          onChange={(e) =>
-            setFormData({ ...formData, ingredients: e.target.value })
-          }
-          required
-        />
+        <div>
+          <h4>Ingredients:</h4>
+          <ul>
+            {formData.ingredientsList?.map((ingredient, index) => (
+              <li key={index} style={{ display: "flex", alignItems: "center" }}>
+                <span style={{ marginRight: "10px" }}>{ingredient}</span>
+                <button
+                  type="button"
+                  onClick={() => deleteIngredient(index)}
+                  style={{
+                    backgroundColor: "red",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            value={newIngredient}
+            onChange={(e) => setNewIngredient(e.target.value)}
+            placeholder="Add a new ingredient"
+          />
+          <button
+            type="button"
+            onClick={() => {
+              addIngredient(newIngredient);
+              setNewIngredient(""); // Clear the input after adding
+            }}
+          >
+            Add Ingredient
+          </button>
+        </div>
+
         <textarea
           placeholder="Steps"
           value={formData.steps}
