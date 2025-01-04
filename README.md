@@ -28,7 +28,7 @@ This project allows you to manage recipes, including adding, editing, deleting, 
    npm run dev
    
 6. **Start the JSON Server**  
-   Ensure you are in the same directory as the database.json file, then run the following command:  
+   Open a new terminal on the same directory leaving previous command in execution. Ensure you are in the same directory as the database.json file, then run the following command:  
    ```bash
    npx json-server database.json
    
